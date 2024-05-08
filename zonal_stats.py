@@ -61,9 +61,3 @@ mean_csv()
 
 # on ouvre fichier csv
 csv=pd.read_csv('test.csv')
-
-
-    
-
-
-
