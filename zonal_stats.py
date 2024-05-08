@@ -11,22 +11,25 @@ import pandas as pd
 import rasterio
 from rasterstats import zonal_stats
 
-# add path to files
+# add your path and file names
 
-path=""
+path="/"
+zipfile="projects.zip"
+rasterfile="FUSION_DEC_2154.tif"
+vectorfile="project_layers.shp"
 
 os.chdir(path) # changing the working environment
 
 # reading raster and vector files
 
-raster=rasterio.open("zip://"+path+"projects.zip!/FUSION_DEC_2154.tif")
+raster=rasterio.open("zip://"+path+zipfile+"!/"+rasterfile)
 
-vectors=gpd.read_file("zip://"+path+"projects.zip!/project_layers.shp")
+vectors=gpd.read_file("zip://"+path+zipfile+"!/"+vectorfile)
 
 # path to raster and vectors in the zip file
 
-tif="zip://"+path+"projects.zip!/FUSION_DEC_2154.tif"
-vec="zip://"+path+"projects.zip!/project_layers.shp"
+tif="zip://"+path+zipfile+"!/"+rasterfile
+vec="zip://"+path+zipfile+"!/"+vectorfile
  
 # checking CRS with a condition to reproject the layer if CRS are not identical
 
