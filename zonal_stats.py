@@ -4,43 +4,42 @@ Created on Mon Mar 21 13:23:04 2022
 
 @author: SGJ2994A
 """
-# importation des bilbiothèques
+# importation of libraries
 import os
 import geopandas as gpd
 import pandas as pd
 import rasterio
 from rasterstats import zonal_stats
 
-# chemin vers le fichiers
+# path to files
 
-path="D:/Programmation/Projet_raster/"
+path="D:/Programming/Raster_Project/"
 
-os.chdir(path) # changement d'environnement de Travail
+os.chdir(path) # changing the working environment
 
-# lectures des fichiers raster et vecteur
+# reading raster and vector files
 
-raster=rasterio.open("zip://D:/Programmation/Projet_raster/projets.zip!/FUSION_DEC_2154.tif")
+raster=rasterio.open("zip://"+path+"projects.zip!/FUSION_DEC_2154.tif")
 
-vecteurs=gpd.read_file("zip://D:/Programmation/Projet_raster/projets.zip!/couches_projets.shp")
+vectors=gpd.read_file("zip://"+path+"projects.zip!/project_layers.shp")
 
-# chemin vers raster et vecteurs dans le zip 
+# path to raster and vectors in the zip file
 
-tif="zip://D:/Programmation/Projet_raster/projets.zip!/FUSION_DEC_2154.tif"
-vec="zip://D:/Programmation/Projet_raster/projets.zip!/couches_projets.shp"
+tif="zip://"+path+"projects.zip!/FUSION_DEC_2154.tif"
+vec="zip://"+path+"projects.zip!/project_layers.shp"
  
-# verification des crs avec une condition pour reprojetter la couche si jamais les crs ne sont pas identiques
+# checking CRS with a condition to reproject the layer if CRS are not identical
 
-if raster.crs == vecteurs.crs.srs :
-    print("crs bon!")
-else : vecteurs.to_crs(epsg=2154)
+if raster.crs == vectors.crs.srs :
+    print("Correct CRS!")
+else : vectors.to_crs(epsg=2154)
 
-# création d'une fonction permettant d'extraire la valeur moyenne contenu dans un polygone
-# ou un point et sortir en csv en conservant que les colonnes id et mean (moyenne)
+# creating a function to extract the mean value within a polygon or a point
+# and export it to CSV keeping only the id and mean columns
 
 def mean_csv():
     
-    # moyenne par zone en geojson en spécifiant le numéro de la bande parce qu'il 
-    # y a plusieurs bandes et une bande = une date
+    # mean by zone in geojson specifying the band number because there are multiple bands and one band = one date
     
     geojson=zonal_stats(vec, 
                      tif, band=1,
@@ -48,16 +47,16 @@ def mean_csv():
                 stats="mean")
     
     
-    # on crée un dataframe à partir du geojson
+    # creating a dataframe from the geojson
     json = gpd.GeoDataFrame.from_features(geojson)
 
-    # geojson en csv avec les colonnes id(index), id_lot et mean(moyennes)
+    # geojson to csv with columns id(index), id_lot and mean(means)
 
-    json[{'ID_ILOT','mean'}].to_csv('test.csv', index=True)
+    json[{'ID_LOT','mean'}].to_csv('test.csv', index=True)
 
-# on teste la fonction 
+# testing the function 
 mean_csv()
 
 
-# on ouvre fichier csv
+# opening csv file
 csv=pd.read_csv('test.csv')
