@@ -11,9 +11,9 @@ import pandas as pd
 import rasterio
 from rasterstats import zonal_stats
 
-# path to files
+# add path to files
 
-path="D:/Programming/Raster_Project/"
+path=""
 
 os.chdir(path) # changing the working environment
 
