@@ -27,6 +27,9 @@ To run the code, follow these steps:
 
 The code uses a raster dataset in TIFF format and a vector dataset in shapefile format. The raster dataset is named `FUSION_DEC_2154.tif`, and the vector dataset is named `couches_projets.shp`. Both datasets are located in a ZIP file named `projets.zip`.
 
+If you don't have a raster and vector dataset, you can use QGIS to create them. QGIS is a free and open-source geographic information system (GIS) application that allows you to create, edit, and analyze spatial data.
+
+
 ## License
 
 This code is released under the MIT License.
